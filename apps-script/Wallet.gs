@@ -1,0 +1,3 @@
+function wallet_(userId) { ensureWallet_(userId); return find_('Wallets', 'userId', userId); }
+function transaction_(userId, type, points, referenceId, key, before, after, description) { if (find_('Transactions', 'idempotencyKey', key)) return; insert_('Transactions', { transactionId: id_(), userId: userId, type: type, points: points, referenceId: referenceId, idempotencyKey: key, balanceBefore: before, balanceAfter: after, description: description, conversionRateSnapshot: `${setting_('POINTS_PER_UNIT')}:${setting_('TAKA_PAISE_PER_UNIT')}`, createdAt: now_() }); }
+function setting_(key) { const item = find_('Settings', 'settingKey', key); return item ? item.settingValue : DEFAULT_SETTINGS[key]; }
