@@ -51,6 +51,11 @@ The current database setup also creates `UnlockRequests`, `TaskUnlocks`,
 these files. Referral, task unlock, support, wallet, and transaction changes
 are all enforced by Apps Script; publishing only the frontend is not enough.
 
+Tasks can be assigned to one or more categories (`Basic`, `Standard`, and
+`Premium`). Users choose one of their unlocked categories when submitting a
+task, and the submission is credited with that category's points (10, 25, or
+50). Existing tasks with a single category remain supported.
+
 Always update and save every file in `apps-script/` before publishing a new
 version. The request router in `Code.gs` calls helpers from the other files, so
 an older deployment can report errors such as `dashboardData_ is not defined`

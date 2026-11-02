@@ -9,7 +9,7 @@ function reviewSubmission_(admin, submissionId, body) {
     const t = now_();
     if (body.status === 'approved') {
       if (Number(task.completedCount || 0) >= Number(task.maxParticipants)) throw new Error('Task participant limit has been reached.');
-      const wallet = wallet_(submission.userId); const before = Number(wallet.availablePoints); const points = Number(task.points);
+      const wallet = wallet_(submission.userId); const before = Number(wallet.availablePoints); const points = Number(submission.pointsSnapshot || task.points);
       update_('Wallets', 'userId', submission.userId, { availablePoints: before + points, totalEarnedPoints: Number(wallet.totalEarnedPoints) + points, updatedAt: t });
       transaction_(submission.userId, 'credit', points, submission.submissionId, `submission-credit-${submission.submissionId}`, before, before + points, 'Approved task submission');
       update_('Tasks', 'taskId', task.taskId, { completedCount: Number(task.completedCount || 0) + 1, updatedAt: t });
