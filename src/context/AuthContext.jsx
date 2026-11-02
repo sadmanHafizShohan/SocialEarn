@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
       setTokenProvider(() => next.getIdToken());
       try {
         const response = await api.get('/auth/me');
-        setProfile(response.data?.user ? { ...response.data.user, referral: response.data.referral } : null);
+        setProfile(response.data?.user ? { ...response.data.user, profileImage: response.data.user.profileImage || next.photoURL || '', referral: response.data.referral } : null);
       } catch (error) {
         setProfile(null);
         console.error('Unable to synchronize the authenticated user with the backend.', error);
@@ -28,7 +28,7 @@ export function AuthProvider({ children }) {
   useEffect(() => { setTokenProvider(() => user?.getIdToken()); }, [user]);
   async function refreshProfile() {
     const response = await api.get('/auth/me');
-    setProfile(response.data?.user ? { ...response.data.user, referral: response.data.referral } : null);
+    setProfile(response.data?.user ? { ...response.data.user, profileImage: response.data.user.profileImage || user?.photoURL || '', referral: response.data.referral } : null);
   }
   async function applyReferralCode(referralCode) {
     await api.post('/referral/apply', { referralCode });

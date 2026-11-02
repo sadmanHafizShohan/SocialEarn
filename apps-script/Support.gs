@@ -3,7 +3,7 @@ function supportMessages_(user) {
   const visible = user.role === 'admin' ? messages : messages.filter(function(item) { return String(item.userId) === String(user.userId); });
   return visible.map(function(item) {
     const account = find_('Users', 'userId', item.userId);
-    return Object.assign({}, item, { userEmail: account ? account.email : item.userId });
+    return Object.assign({}, item, { userEmail: account ? account.email : item.userId, userName: account ? account.name : item.userId, profileImage: account ? account.profileImage : '' });
   }).sort(function(a, b) {
     return new Date(a.createdAt) - new Date(b.createdAt);
   });

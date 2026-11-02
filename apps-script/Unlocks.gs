@@ -1,7 +1,7 @@
 const TASK_CATEGORIES = {
-  Basic: { amountTaka: 100, points: 10 },
-  Standard: { amountTaka: 300, points: 25 },
-  Premium: { amountTaka: 500, points: 50 }
+  Basic: { amountTaka: 250, points: 150 },
+  Standard: { amountTaka: 450, points: 350 },
+  Premium: { amountTaka: 850, points: 600 }
 };
 
 function categoryConfig_(category) {

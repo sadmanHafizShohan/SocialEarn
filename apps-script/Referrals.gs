@@ -47,14 +47,14 @@ function applyReferral_(user, body) {
     update_('Referrals', 'userId', user.userId, { referredByUserId: referrer.userId });
     const wallet = wallet_(referrer.userId);
     const rewardPoints = 100;
-    const before = Number(wallet.availablePoints || 0);
-    const after = before + rewardPoints;
+    const referralBefore = Number(wallet.referralPoints || 0);
+    const referralAfter = referralBefore + rewardPoints;
     update_('Wallets', 'userId', referrer.userId, {
-      availablePoints: after,
+      referralPoints: referralAfter,
       totalEarnedPoints: Number(wallet.totalEarnedPoints || 0) + rewardPoints,
       updatedAt: t
     });
-    transaction_(referrer.userId, 'referral', rewardPoints, user.userId, `referral-reward-${user.userId}`, before, after, 'Referral reward');
+    transaction_(referrer.userId, 'referral', rewardPoints, user.userId, `referral-reward-${user.userId}`, referralBefore, referralAfter, 'Referral reward');
     update_('Referrals', 'userId', user.userId, { rewardedAt: t });
     return referralProfile_(user.userId);
   } finally {
